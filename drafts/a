@@ -1,0 +1,12 @@
+#[System.Windows.MessageBox]::Show("You clicked the button!")
+	
+	Start-Process pwsh.exe -ArgumentList "-NoExit", "-Command", "Write-Host 'akame';pause;exit" -Wait
+
+
+
+
+
+$FuncDef = "function use-winget { ${function:use-winget} }"
+    $Payload = "$FuncDef; use-winget Mozilla.Firefox install; pause"
+    Start-Process pwsh.exe -ArgumentList "-NoExit", "-Command", $Payload -Wait
+	#Start-Process pwsh.exe -ArgumentList "-NoExit", "-Command", "use-winget Mozilla.Firefox install;pause;exit" -Wait

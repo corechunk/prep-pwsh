@@ -17,7 +17,11 @@ function touch-file ([String]$file) {
 
 
 $files = @(	
+	"src/base/param.ps1",
+	"src/base/base.ps1",
+	"src/base/pkgs.ps1",
 	"src/module1.ps1",
+	"src/pre-main.ps1",
 	"src/main.ps1"
 )
 $output = "script.ps1"
@@ -32,7 +36,13 @@ function clean-proj {
 function build-proj {
 	touch-file $output
 
-	"Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser" | Add-Content $output
+	"`n# ------- File : $files[0] ------- `n" | Add-Content $output
+	Get-Content $files[0] | Add-Content $output
+	$files = $files | Select-Object -Skip 1 # reduce value from index 0
+
+	"
+	Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+	" | Add-Content $output
 
 	foreach ($file in $files) {
 		"`n# ------- File : $file ------- `n" | Add-Content $output
