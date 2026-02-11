@@ -9,6 +9,10 @@ build-proj
 ```
 #>
 
+param(
+	[string]$opt
+)
+
 function touch-file ([String]$file) {
 	if (-Not(Test-Path $file)) {
 		New-Item $file -Force
@@ -40,9 +44,9 @@ function build-proj {
 	Get-Content $files[0] | Add-Content $output
 	$files = $files | Select-Object -Skip 1 # reduce value from index 0
 
-	"
-	Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-	" | Add-Content $output
+	#"
+	#Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+	#" | Add-Content $output
 
 	foreach ($file in $files) {
 		"`n# ------- File : $file ------- `n" | Add-Content $output
@@ -54,4 +58,12 @@ function build-proj {
 function rebuild-proj {
 	clean-proj
 	build-proj
+}
+
+if($opt -eq "clean"){
+	clean-proj
+}elseif ($opt -eq "build"){
+	build-proj
+}elseif ($opt -eq "rebuild"){
+	rebuild-proj
 }

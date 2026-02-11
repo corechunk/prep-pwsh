@@ -109,15 +109,15 @@ function Switch-Page($PageName) {
 
 $window.FindName("btnManSoft").Add_Click({
 		Write-Host "btnManSoft"
-})
+	})
 
 $window.FindName("btnMath").Add_Click({
 		Switch-Page "MathMenu"
-})
+	})
 
 $window.FindName("btnTemp").Add_Click({
-    	Write-Host "btnTemp"
-})
+		Write-Host "btnTemp"
+	})
 
 $window.FindName("btnSum").Add_Click({
 		Write-Host "btnSum"

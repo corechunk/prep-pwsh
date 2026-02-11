@@ -20,6 +20,8 @@ function math-menu {
 			sum
 		}elseif($cho -eq "2"){
 			"opt2"
+		}elseif($cho -eq "3"){
+			"opt3"
 		}elseif($cho -eq "x"){
 			"optX"
 			break

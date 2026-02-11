@@ -4,12 +4,9 @@
 param(
     [string]$FuncName,
     [string]$output,
-    [string]$FuncArgs # Changed to string to receive JSON
+    [string[]]$FuncArgs # Changed to string to receive JSON
 )
 
-
-	Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-	
 
 # ------- File : src/base/base.ps1 ------- 
 
@@ -87,6 +84,8 @@ function math-menu {
 			sum
 		}elseif($cho -eq "2"){
 			"opt2"
+		}elseif($cho -eq "3"){
+			"opt3"
 		}elseif($cho -eq "x"){
 			"optX"
 			break
@@ -104,28 +103,20 @@ function manager-software {
 # ------- File : src/pre-main.ps1 ------- 
 
 if ($FuncName) {
-    # Task Mode: This block executes when the script is re-invoked with a function name.
-
-    # Parse FuncArgs if it was passed as a JSON string
-    $parsedFuncArgs = @{}
-    if ($FuncArgs -and ($FuncArgs | ConvertFrom-Json -ErrorAction SilentlyContinue)) {
-        $parsedFuncArgs = $FuncArgs | ConvertFrom-Json
-    }
-
-    $result = switch ($FuncName) {
-        'manager-software' { manager-software }
-        'math-menu' { math-menu }
-        'use-winget' { use-winget @parsedFuncArgs }
-        default { Write-Error "Unknown function: $FuncName" }
-    }
-
-    # Save the result to the specified results file, if provided.
-    if ($output) {
-        try {
-            $result | Export-CliXml -Path $output
-        } catch {
-            Write-Error "Failed to save results to $output. Error: $_"
-        }
+    switch ($FuncName)
+	{
+        'manager-software' {
+			manager-software
+		}
+        'math-menu' {
+			math-menu
+		}
+        'use-winget' {
+			use-winget $FuncArgs[0] $FuncArgs[1]
+		}
+        default {
+			Write-Error "Unknown function: $FuncName"
+		}
     }
 
     # Exit the script to prevent the GUI from loading.
@@ -150,8 +141,9 @@ if ($FuncName) {
 #			manager-software
 #		}elseif($cho -eq "2"){
 #			"opt2"
-#		}elseif($cho -eq "x"){
+#		}elseif($cho -eq "3"){
 #			math-menu
+#		}elseif($cho -eq "x"){
 #			break
 #		}else{
 #			"elselee"
@@ -159,8 +151,7 @@ if ($FuncName) {
 #	}
 #};main
 
-# 1. Load the WPF Framework
-Add-Type -AssemblyName PresentationFramework
+# 1. Load the WPF Framework#Add-Type -AssemblyName PresentationFramework
 
 # 2. Define the XAML (The Design)
 # Note: The 'x:Name' attribute is crucial. It lets PowerShell find the element later.
@@ -171,24 +162,54 @@ Add-Type -AssemblyName PresentationFramework
 	Width="800" Height="600"
 	MinWidth="800" MinHeight="600"
     Title="My First Tool">
-    
-    <Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="*"/> <RowDefinition Height="*"/>  
-			<RowDefinition Height="*"/> <RowDefinition Height="*"/>
-			<RowDefinition Height="*"/> <RowDefinition Height="*"/>
-			<RowDefinition Height="*"/> <RowDefinition Height="*"/> 
-		</Grid.RowDefinitions>
-		
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="80"/>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="80"/>
-		</Grid.ColumnDefinitions>
 
-		<Button x:Name="MyButton1" Grid.Row="1" Grid.Column="1" Content="manager-software" Margin="5" />
-		<Button x:Name="MyButton2" Grid.Row="2" Grid.Column="1" Content="mathematical stuff" Margin="5" />
-		<Button x:Name="MyButton3" Grid.Row="3" Grid.Column="1" Content="TEMP : install firefox" Margin="5" />
+	<Grid>
+    	<Grid x:Name="MainMenu">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>  
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="80"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="80"/>
+				</Grid.ColumnDefinitions>
+
+				<Button x:Name="btnManSoft" Grid.Row="1" Grid.Column="1" Content="manager-software" Margin="10" />
+				<Button x:Name="btnMath" Grid.Row="2" Grid.Column="1" Content="mathematical stuff" Margin="10" />
+				<Button x:Name="btnTemp" Grid.Row="3" Grid.Column="1" Content="TEMP : install firefox" Margin="10" />
+			</Grid>
+		</Grid>
+			
+		<!-- MATH MENU -->
+		<Grid x:Name="MathMenu" Visibility="Collapsed">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>  
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="80"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="80"/>
+			</Grid.ColumnDefinitions>
+			
+			<Button x:Name="btnSum" Grid.Row="1" Grid.Column="1" Content="1. sum" Margin="10"/>
+			<Button x:Name="btnMatrix" Grid.Row="2" Grid.Column="1" Content="2. matrix (x)" Margin="10"/>
+			<Button x:Name="btnBack" Grid.Row="3" Grid.Column="1" Content="x. Back" Margin="15"/>
+		</Grid>
 	</Grid>
 </Window>
 "@
@@ -197,70 +218,44 @@ Add-Type -AssemblyName PresentationFramework
 $reader = (New-Object System.Xml.XmlNodeReader $xaml)
 $window = [Windows.Markup.XamlReader]::Load($reader)
 
-$window.FindName("MyButton1").Add_Click({
-    $resultsFile = Join-Path $env:TEMP ([System.Guid]::NewGuid().ToString() + ".xml")
-
-    # Construct the command to re-invoke the script in Task Mode
-    $command = "& { $(irm ""$ScriptURL"") } -FuncName 'manager-software' -output '$resultsFile' "
+$MainMenu = $window.FindName("MainMenu")
+$MathMenu = $window.FindName("MathMenu")
+$Pages = @($MainMenu, $MathMenu)
+function Switch-Page($PageName) {
     
-    # Launch the new PowerShell process
-    Start-Process pwsh.exe -ArgumentList "-NoExit", "-Command", $command -Wait
+	# Hide all pages
+	foreach ($p in $Pages) {
+		$p.Visibility = "Collapsed"
+	}
 
-    # Read results from the temporary file
-    if (Test-Path $resultsFile) {
-        $taskResult = Import-CliXml -Path $resultsFile
-        # TODO: Implement logic to update GUI based on $taskResult
-        Write-Host "manager-software task completed. Result: $($taskResult | Out-String)"
-        Remove-Item $resultsFile -Force
-    } else {
-        Write-Warning "No results file found for manager-software task."
-    }
+	# Show requested page
+	$window.FindName($PageName).Visibility = "Visible"
+}
+
+
+
+$window.FindName("btnManSoft").Add_Click({
+		Write-Host "btnManSoft"
 })
-$window.FindName("MyButton2").Add_Click({
-    $resultsFile = Join-Path $env:TEMP ([System.Guid]::NewGuid().ToString() + ".xml")
 
-    # Construct the command to re-invoke the script in Task Mode
-    $command = "& { $(irm ""$ScriptURL"") } -FuncName 'math-menu' -output '$resultsFile' "
-    
-    # Launch the new PowerShell process
-    Start-Process pwsh.exe -ArgumentList "-NoExit", "-Command", $command -Wait
-
-    # Read results from the temporary file
-    if (Test-Path $resultsFile) {
-        $taskResult = Import-CliXml -Path $resultsFile
-        # TODO: Implement logic to update GUI based on $taskResult
-        Write-Host "math-menu task completed. Result: $($taskResult | Out-String)"
-        Remove-Item $resultsFile -Force
-    } else {
-        Write-Warning "No results file found for math-menu task."
-    }
+$window.FindName("btnMath").Add_Click({
+		Switch-Page "MathMenu"
 })
-$window.FindName("MyButton3").Add_Click({
-    $resultsFile = Join-Path $env:TEMP ([System.Guid]::NewGuid().ToString() + ".xml")
 
-    # Arguments for use-winget
-    $funcArgs = @{
-        pkgID = "Mozilla.Firefox"
-        opt = "install"
-    }
-
-    # Construct the command to re-invoke the script in Task Mode
-    $command = "& { $(irm ""$ScriptURL"") } -FuncName 'use-winget' -output '$resultsFile' -FuncArgs $($funcArgs | ConvertTo-Json -Compress) "
-    
-    # Launch the new PowerShell process
-    Start-Process pwsh.exe -ArgumentList "-NoExit", "-Command", $command -Wait
-
-    # Read results from the temporary file
-    if (Test-Path $resultsFile) {
-        $taskResult = Import-CliXml -Path $resultsFile
-        # TODO: Implement logic to update GUI based on $taskResult
-        Write-Host "use-winget task completed. Result: $($taskResult | Out-String)"
-        Remove-Item $resultsFile -Force
-    } else {
-        Write-Warning "No results file found for use-winget task."
-    }
+$window.FindName("btnTemp").Add_Click({
+    	Write-Host "btnTemp"
 })
-$ScriptURL
+
+$window.FindName("btnSum").Add_Click({
+		Write-Host "btnSum"
+	})
+$window.FindName("btnMatrix").Add_Click({
+		Write-Host "btnMatrix"
+	})
+$window.FindName("btnBack").Add_Click({
+		Switch-Page "MainMenu"
+	})
+
 $window.ShowDialog() | Out-Null
 
 # -------------- 
