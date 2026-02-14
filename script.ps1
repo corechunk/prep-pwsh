@@ -1,12 +1,6 @@
-
-# ------- File : src/base/param.ps1 src/base/base.ps1 src/base/pkgs.ps1 src/module1.ps1 src/pre-main.ps1[0] ------- 
-
-param(
-    [string]$FuncName,
-    [string]$output,
-    [string[]]$FuncArgs # Changed to string to receive JSON
-)
-
+Add-Type -AssemblyName PresentationFramework
+	Add-Type -AssemblyName PresentationCore
+	Add-Type -AssemblyName WindowsBase
 
 # ------- File : src/base/base.ps1 ------- 
 
