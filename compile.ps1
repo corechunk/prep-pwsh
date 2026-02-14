@@ -80,14 +80,14 @@ function build-proj {
 	touch-file $output
 
 	update-progress "Adding Parameters"
-	"`n# ------- File : $files[0] ------- `n" | Add-Content $output
+	"`n# ------- File : $files[0] ------- `n" | Set-Content $output
 	Get-Content $files[0] | Add-Content $output
 	$files = $files | Select-Object -Skip 1
 
 	update-progress "Adding WPF Module"
 	"Add-Type -AssemblyName PresentationFramework
 	Add-Type -AssemblyName PresentationCore
-	Add-Type -AssemblyName WindowsBase" | Set-Content $output 
+	Add-Type -AssemblyName WindowsBase" | Add-Content $output 
 	
 	update-progress "Adding all function"
 	foreach ($file in $files) {
