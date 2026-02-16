@@ -66,18 +66,18 @@ This is the index for the Deep Dive documentation series.
 
 | Topic | Covered Controls / Concepts |
 |-------|-----------------------------|
-| 1. [window](./xtra/deepdive/01.window.md) | — |
-| 2. [button](./xtra/deepdive/02.button.md) | — |
-| 3. [Panels_&_Layout_System](./xtra/deepdive/03.Panels_&_Layout_System.md) | Layout fundamentals |
-| 4. [Menu_ContextMenu_&_ToolBar_System](./xtra/deepdive/04.Menu_ContextMenu_&_ToolBar_System.md) | Menu, ContextMenu, ToolBar |
-| 5. [Images_Icons_Media_&_Visual_Assets](./xtra/deepdive/05.Images_Icons_Media_&_Visual_Assets.md) | Images, Icons, Media |
-| 6. [Custom_Title_Bar_Window_Chrome_&_Advanced_Window_Control](./xtra/deepdive/06.Custom_Title_Bar_Window_Chrome_&_Advanced_Window_Control.md) | Window Chrome, Advanced Control |
-| 7. [Layout_Panels_Deep_Dive](./xtra/deepdive/07.Layout_Panels_Deep_Dive.md) | (Grid, StackPanel, DockPanel, WrapPanel, Canvas) |
-| 8. [Advanced_Event_Handling](./xtra/deepdive/08.Advanced_Event_Handling.md) | (Control Events, Routed Events, Bubbling, Tunneling, Custom Events) |
-| 9. [Styling_&_Templates](./xtra/deepdive/09.Styling_&_Templates.md) | (Backgrounds, Colors, Fonts, Images, Icons, Tooltips, Custom Styles) |
-| 10. [Layouts_&_Advanced_Controls](./xtra/deepdive/10.Layouts_&_Advanced_Controls.md) | (StackPanel, DockPanel, WrapPanel, ScrollViewer, TabControl, TreeView, DataGrid) |
-| 11. [Events_&_Interactivity](./xtra/deepdive/11.Events_&_Interactivity.md) | (Click, Mouse, Keyboard, Focus, Drag & Drop, Commands, RoutedEvents, Timers, Animation) |
-| 12. [Styling_Templates_&_Themes](./xtra/deepdive/12.Styling_Templates_&_Themes.md) | (Brushes, Fonts, Borders, Gradient, Styles, ControlTemplates, DataTemplates) |
-| 13. [Panels_Layouts_&_Containers](./xtra/deepdive/13.Panels_Layouts_&_Containers.md) | (StackPanel, Grid, DockPanel, WrapPanel, Canvas, ScrollViewer, TabControl, Expander, etc.) |
-| 14. [Event_Handling_Commands_Data_Binding_MVVM_Patterns](./xtra/deepdive/14.Event_Handling_Commands_Data_Binding_MVVM_Patterns.md) | (Commands, Data Binding, MVVM) |
-| 15. [Advanced_UI](./xtra/deepdive/15.Advanced_UI.md) | (Window Icon, Title Bar, Sliding Panels, Custom Menus) |
+| 1. [window](./xtra/deepDive/01.window.md) | — |
+| 2. [button](./xtra/deepDive/02.button.md) | — |
+| 3. [Panels_&_Layout_System](./xtra/deepDive/03.Panels_&_Layout_System.md) | Layout fundamentals |
+| 4. [Menu_ContextMenu_&_ToolBar_System](./xtra/deepDive/04.Menu_ContextMenu_&_ToolBar_System.md) | Menu, ContextMenu, ToolBar |
+| 5. [Images_Icons_Media_&_Visual_Assets](./xtra/deepDive/05.Images_Icons_Media_&_Visual_Assets.md) | Images, Icons, Media |
+| 6. [Custom_Title_Bar_Window_Chrome_&_Advanced_Window_Control](./xtra/deepDive/06.Custom_Title_Bar_Window_Chrome_&_Advanced_Window_Control.md) | Window Chrome, Advanced Control |
+| 7. [Layout_Panels_Deep_Dive](./xtra/deepDive/07.Layout_Panels_Deep_Dive.md) | (Grid, StackPanel, DockPanel, WrapPanel, Canvas) |
+| 8. [Advanced_Event_Handling](./xtra/deepDive/08.Advanced_Event_Handling.md) | (Control Events, Routed Events, Bubbling, Tunneling, Custom Events) |
+| 9. [Styling_&_Templates](./xtra/deepDive/09.Styling_&_Templates.md) | (Backgrounds, Colors, Fonts, Images, Icons, Tooltips, Custom Styles) |
+| 10. [Layouts_&_Advanced_Controls](./xtra/deepDive/10.Layouts_&_Advanced_Controls.md) | (StackPanel, DockPanel, WrapPanel, ScrollViewer, TabControl, TreeView, DataGrid) |
+| 11. [Events_&_Interactivity](./xtra/deepDive/11.Events_&_Interactivity.md) | (Click, Mouse, Keyboard, Focus, Drag & Drop, Commands, RoutedEvents, Timers, Animation) |
+| 12. [Styling_Templates_&_Themes](./xtra/deepDive/12.Styling_Templates_&_Themes.md) | (Brushes, Fonts, Borders, Gradient, Styles, ControlTemplates, DataTemplates) |
+| 13. [Panels_Layouts_&_Containers](./xtra/deepDive/13.Panels_Layouts_&_Containers.md) | (StackPanel, Grid, DockPanel, WrapPanel, Canvas, ScrollViewer, TabControl, Expander, etc.) |
+| 14. [Event_Handling_Commands_Data_Binding_MVVM_Patterns](./xtra/deepDive/14.Event_Handling_Commands_Data_Binding_MVVM_Patterns.md) | (Commands, Data Binding, MVVM) |
+| 15. [Advanced_UI](./xtra/deepDive/15.Advanced_UI.md) | (Window Icon, Title Bar, Sliding Panels, Custom Menus) |
